@@ -5,7 +5,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import Button from "@mui/material/Button";
 
+import { NavLink } from "react-router-dom";
 function MainNavbar() {
   return (
     <>
@@ -20,9 +22,14 @@ function MainNavbar() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" component="div">
-              Photos
-            </Typography>
+            <Typography
+              variant="h6"
+              color="inherit"
+              component="div"
+            ></Typography>
+            <NavLink to="login">
+              <Button color="inherit">Login</Button>
+            </NavLink>
           </Toolbar>
         </AppBar>
       </Box>

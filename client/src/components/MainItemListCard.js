@@ -20,8 +20,7 @@ function MainItemListCard({ item }) {
           {item.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {item._id}
         </Typography>
       </CardContent>
       <CardActions>

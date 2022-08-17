@@ -13,7 +13,7 @@ function App() {
       <AutenticationContextProvider>
         <AppContextProvider>
           <Routes>
-            <Route path="/" element={<MainItemListView />} />
+            <Route path="home" element={<MainItemListView />} />
 
             <Route path="login" element={<LoginView />} />
             <Route path="signup" element={<SignupView />} />
