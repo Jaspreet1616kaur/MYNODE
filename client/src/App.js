@@ -1,27 +1,25 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { useEffect } from "react";
+import MainNavbar from "./navigation/MainNavbar";
+import MainItemListView from "./views/MainItemListView";
+import { Route, Routes } from "react-router-dom";
+import LoginView from "./views/LoginView";
+import SignupView from "./views/SignupView";
+import { AutenticationContextProvider } from "./context/AutenticationContext";
+import { AppContextProvider } from "./context/appContext";
 
 function App() {
-  var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
-
-  const myFetch = () => {
-    fetch("http://localhost:5001/api/museums/all", requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  };
-
-  useEffect(() => {
-    myFetch();
-  }, []);
-
   return (
     <div className="App">
-      <h1>landing page</h1>
+      <MainNavbar />
+      <AutenticationContextProvider>
+        <AppContextProvider>
+          <Routes>
+            <Route path="/" element={<MainItemListView />} />
+
+            <Route path="login" element={<LoginView />} />
+            <Route path="signup" element={<SignupView />} />
+          </Routes>
+        </AppContextProvider>
+      </AutenticationContextProvider>
     </div>
   );
 }

@@ -2,11 +2,10 @@ import museumsModel from "../models /museumsModel.js";
 
 const getAllMuseums = async (req, res) => {
   try {
-    const allMuseums = await museumsModel.find({});
-    // .populate({
-    //   path: "city",
-    //   select: ["name", "likes"],
-    // });
+    const allMuseums = await museumsModel.find({}).populate({
+      path: "city",
+      select: ["name", "likes"],
+    });
     res.status(200).json({
       allMuseums,
       number: allMuseums.length,
