@@ -6,13 +6,14 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
-
-import { NavLink } from "react-router-dom";
+import "./MainNavbar.css";
+// import { NavLink } from "react-router-dom";
+import { Link } from "@mui/material";
 function MainNavbar() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" className="link">
           <Toolbar variant="dense">
             <IconButton
               edge="start"
@@ -22,18 +23,25 @@ function MainNavbar() {
             >
               <MenuIcon />
             </IconButton>
+
             <Typography
               variant="h6"
               color="inherit"
               component="div"
             ></Typography>
-            <NavLink to="login">
+            <Link href="home">Home</Link>
+            <Link href="login">
               <Button color="inherit">Login</Button>
-            </NavLink>
+            </Link>
+
+            {/* <NavLink to="login">
+              <Button color="inherit">Login</Button>
+            </NavLink> */}
           </Toolbar>
         </AppBar>
       </Box>
     </>
   );
 }
+
 export default MainNavbar;
