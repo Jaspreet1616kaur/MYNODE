@@ -7,7 +7,7 @@ const uploadUserPicture = async (req, res) => {
   try {
     console.log("req.file :>> ", req.file); //Multer is storing the file in that property(objec) of the request object
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-      folder: "MyProject",
+      folder: "ProjectPicture",
     });
     console.log("uploadResult", uploadResult); //this show us the object with all the information about the upload, including the public URL in result.url
     res.status(200).json({
