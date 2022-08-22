@@ -7,7 +7,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import "./MainNavbar.css";
-// import { NavLink } from "react-router-dom";
 import { Link } from "@mui/material";
 function MainNavbar() {
   return (
@@ -30,12 +29,12 @@ function MainNavbar() {
               component="div"
             ></Typography>
             <Link href="home">Home</Link>
-            <Link href="login">
-              <Button color="inherit">Login</Button>
+            <Link href="signup">
+              <Button color="inherit">Signup</Button>
             </Link>
 
-            {/* <NavLink to="login">
-              <Button color="inherit">Login</Button>
+            {/* <NavLink to="signup">
+              <Button color="inherit">SignUp</Button>
             </NavLink> */}
           </Toolbar>
         </AppBar>

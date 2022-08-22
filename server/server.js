@@ -8,6 +8,7 @@ import usersRoute from "./routes/usersRoute.js";
 import citiesRoute from "./routes/citiesRoute.js";
 import museumsRoute from "./routes/museumsRoute.js";
 import { cloudinaryConfig } from "./config/cloudinaryConfig.js";
+
 const app = express();
 const port = process.env.PORT || 5001;
 
@@ -42,7 +43,8 @@ const loadRoutes = () => {
   app.use("/api/users", router);
   app.use("/api/cities", citiesRoute);
   app.use("/api/museums", museumsRoute);
-  app.use("/api/users", usersRoute);
+  // here  new route for users and import the usersRoute
+  app.use("/api/users1", usersRoute);
 };
 
 (async function controller() {
