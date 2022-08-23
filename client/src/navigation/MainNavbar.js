@@ -8,6 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import "./MainNavbar.css";
 import { Link } from "@mui/material";
+
 function MainNavbar() {
   return (
     <>
@@ -33,9 +34,9 @@ function MainNavbar() {
               <Button color="inherit">Signup</Button>
             </Link>
 
-            {/* <NavLink to="signup">
-              <Button color="inherit">SignUp</Button>
-            </NavLink> */}
+            <Link href="login">
+              <Button color="inherit">Login</Button>
+            </Link>
           </Toolbar>
         </AppBar>
       </Box>

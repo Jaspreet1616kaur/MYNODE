@@ -1,6 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models /usersModel.js";
 import bcrypt from "bcrypt";
+import { verifyPassword } from "../utils/encryptpassword.js";
+import { issueToken } from "../utils/jwt.js";
 
 //. Define upload function
 const uploadUserPicture = async (req, res) => {
@@ -85,4 +87,31 @@ const signUp = async (req, res) => {
   }
 };
 
-export { uploadUserPicture, signUp };
+const login = async (req, res) => {
+  const existingUser = await userModel.findOne({ email: req.body.email });
+  if (!existingUser) {
+    res.status(401).json({ msg: "user not found" });
+  } else {
+    const verified = await verifyPassword(
+      req.body.password,
+      existingUser.password
+    );
+    if (!verified) {
+      res.status(401).json({ msg: "password is incorrect" });
+    } else {
+      console.log("you are logged in");
+      const token = issueToken(existingUser.id);
+      res.status(201).json({
+        msg: "logged in succesfully",
+        user: {
+          userName: existingUser.userName,
+          email: existingUser.email,
+          avatarPicture: existingUser.avatarPicture,
+          id: existingUser._id,
+        },
+        token,
+      });
+    }
+  }
+};
+export { uploadUserPicture, signUp, login };

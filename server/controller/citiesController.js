@@ -29,7 +29,8 @@ const getAllCities = async (req, res) => {
 };
 const getCitiesByCountryCode = async (req, res) => {
   // console.log("req :>> ", req.params.countryCode);
-  console.log("req :>> ", req);
+  console.log("req.params :>> ", req.params.countryCode);
+  console.log("req.query :>> ", req.query);
   const { likes } = req.query;
   if (likes) {
     try {
@@ -39,7 +40,7 @@ const getCitiesByCountryCode = async (req, res) => {
       }).exec();
       if (requestedCities.length === 0) {
         res.status(201).json({
-          msg: "no cities with this country code",
+          msg: "no cities with this amount of likes or country code",
         });
       } else {
         res.status(200).json({
@@ -58,9 +59,11 @@ const getCitiesByCountryCode = async (req, res) => {
     }
   } else {
     try {
+      console.log("req.params.countryCode 222", req.params.countryCode);
       const requestedCities = await City.find({
         countryCode: req.params.countryCode,
       }).exec();
+      console.log("requested cities___", requestedCities);
       if (requestedCities.length === 0) {
         res.status(201).json({
           msg: "no cities with this country code",

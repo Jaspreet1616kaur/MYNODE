@@ -1,4 +1,4 @@
-import { keyframes } from "@emotion/react";
+// import { keyframes } from "@emotion/react";
 import React, { createContext, useState } from "react";
 import { useEffect } from "react";
 
@@ -25,9 +25,7 @@ const AppContextProvider = (props) => {
   }, []);
   console.log("myItem: ", myItem);
   return (
-    <AppContext.Provider
-      value={{ myItem, setError, setError, setIsDataLoading }}
-    >
+    <AppContext.Provider value={{ myItem, setError, setIsDataLoading }}>
       {props.children}
     </AppContext.Provider>
   );

@@ -1,7 +1,7 @@
 import MainNavbar from "./navigation/MainNavbar";
 import MainItemListView from "./views/MainItemListView";
 import { Route, Routes } from "react-router-dom";
-import LoginView from "./views/LoginView";
+import Login from "./views/Login";
 import SignupView from "./views/SignupView";
 import { AutenticationContextProvider } from "./context/AutenticationContext";
 import { AppContextProvider } from "./context/appContext";
@@ -15,7 +15,7 @@ function App() {
           <Routes>
             <Route path="home" element={<MainItemListView />} />
 
-            <Route path="login" element={<LoginView />} />
+            <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignupView />} />
           </Routes>
         </AppContextProvider>
