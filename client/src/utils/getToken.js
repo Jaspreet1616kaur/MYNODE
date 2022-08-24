@@ -1,11 +1,15 @@
-// const getToken = () => {
-//   const token = localStorage.getItem("token");
+const getToken = () => {
+  const token = localStorage.getItem("token");
 
-//   if (token) {
-//     return token;
-//   } else {
-//     return false;
-//   }
-// };
+  if (token) {
+    return token;
+  } else {
+    return false;
+  }
+};
 
-// export { getToken };
+const removeToken = () => {
+  localStorage.removeItem("token");
+};
+
+export { getToken, removeToken };

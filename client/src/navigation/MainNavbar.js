@@ -37,6 +37,9 @@ function MainNavbar() {
             <Link href="login">
               <Button color="inherit">Login</Button>
             </Link>
+            <Link href="profile">
+              <Button color="inherit">Profile</Button>
+            </Link>
           </Toolbar>
         </AppBar>
       </Box>

@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import SignupView from "./views/SignupView";
 import { AutenticationContextProvider } from "./context/AutenticationContext";
 import { AppContextProvider } from "./context/appContext";
+import Profile from "./views/Profile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignupView />} />
+            <Route path="profile" element={<Profile />} />
           </Routes>
         </AppContextProvider>
       </AutenticationContextProvider>

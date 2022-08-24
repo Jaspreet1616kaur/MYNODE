@@ -5,6 +5,7 @@ import { useEffect } from "react";
 const AppContext = createContext();
 
 const AppContextProvider = (props) => {
+  //this is for user loggin
   const [isDataLoading, setIsDataLoading] = useState();
   const [myItem, setMyItem] = useState(null);
   const [error, setError] = useState(null);
@@ -24,8 +25,15 @@ const AppContextProvider = (props) => {
     fetchData();
   }, []);
   console.log("myItem: ", myItem);
+
   return (
-    <AppContext.Provider value={{ myItem, setError, setIsDataLoading }}>
+    <AppContext.Provider
+      value={{
+        myItem,
+        setError,
+        setIsDataLoading,
+      }}
+    >
       {props.children}
     </AppContext.Provider>
   );

@@ -34,7 +34,7 @@ function SignupView() {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/users1/imageUpload",
+        "http://localhost:5001/api/users/imageUpload",
         requestOptions
       );
       const result = await response.json();
@@ -61,7 +61,7 @@ function SignupView() {
     console.log("requestOptions.body", requestOptions.body);
     try {
       const response = await fetch(
-        "http://localhost:5001/api/users1/signup",
+        "http://localhost:5001/api/users/signup",
         requestOptions
       );
       const results = await response.json();
@@ -74,7 +74,9 @@ function SignupView() {
   return (
     <div>
       <h1>User Registration and File Upload</h1>
-
+      <div>
+        <img width="100" src={newUser.avatarPicture} />
+      </div>
       <div className="container">
         {/* // 24. create input fields for username, email and password.Using same handler function */}
         <div>

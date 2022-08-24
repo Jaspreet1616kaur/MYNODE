@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AutenticationContext } from "../context/AutenticationContext";
 import "./Login.css";
 function Login() {
   const [userLogin, setUserLogin] = useState({});
+  const logoutSomething = useContext(AutenticationContext);
 
   const handleChangeHandler = (e) => {
     setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
@@ -60,6 +62,7 @@ function Login() {
           />
 
           <button onClick={login}>Login</button>
+          <button onClick={logoutSomething}> Logout </button>
         </div>
       </form>
     </div>
