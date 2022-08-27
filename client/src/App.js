@@ -6,6 +6,7 @@ import SignupView from "./views/SignupView";
 import { AutenticationContextProvider } from "./context/AutenticationContext";
 import { AppContextProvider } from "./context/appContext";
 import Profile from "./views/Profile";
+import PostMuseum from "./views/PostMuseum";
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
             <Route path="home" element={<MainItemListView />} />
 
             <Route path="login" element={<Login />} />
+
             <Route path="signup" element={<SignupView />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="postmuseum" element={<PostMuseum />} />
           </Routes>
         </AppContextProvider>
       </AutenticationContextProvider>

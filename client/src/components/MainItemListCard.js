@@ -7,14 +7,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 function MainItemListCard({ item }) {
+  console.log("item: ", item);
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        component="img"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
-      />
+      <CardMedia component="img" height="140" image={""} alt="green iguana" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {item.name}
