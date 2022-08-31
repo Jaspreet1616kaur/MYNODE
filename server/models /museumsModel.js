@@ -10,8 +10,8 @@ const museumsSchema = new mongoose.Schema({
     required: true,
   },
   price: {
-    type: Number,
-    required: false,
+    type: String,
+    required: true,
   },
   location: {
     latitude: {
@@ -22,10 +22,10 @@ const museumsSchema = new mongoose.Schema({
       type: Number,
       required: false,
     },
-    avatarPicture: {
-      type: String,
-      required: false,
-    },
+  },
+  avatarPicture: {
+    type: String,
+    required: false,
   },
   city: { type: Schema.Types.ObjectId, ref: "city" },
 });

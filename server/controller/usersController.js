@@ -9,7 +9,7 @@ const uploadUserPicture = async (req, res) => {
   console.log("req.boy", req.boy);
 
   try {
-    console.log("req.file :>> ", req.file); //Multer is storing the file in that property(objec) of the request object
+    // console.log("req.file :>> ", req.file); //Multer is storing the file in that property(objec) of the request object
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "ProjectPicture",
     });

@@ -3,6 +3,7 @@ import { useState } from "react";
 
 function SignupView() {
   //1st  create state for the file that will be uploaded and the JSX elements with the event handlers
+  //this state variable for images
   const [selectedData, setSelectedData] = useState(null);
 
   const [newUser, setNewUser] = useState({});
@@ -21,9 +22,9 @@ function SignupView() {
     e.preventDefault();
     // call  FormData object constructor to populate with pairs of key/values (in this case {image: "our file"} )
     const formData = new FormData();
-    console.log("selectedData", selectedData);
+    // console.log("selectedData", selectedData);
     formData.append("image", selectedData);
-    console.log("formData :>> ", formData);
+    // console.log("formData :>> ", formData);
 
     // compose the object with the options to be sent with our request, including the type of method, and use the body of the request to attach data
 
@@ -38,7 +39,7 @@ function SignupView() {
         requestOptions
       );
       const result = await response.json();
-      console.log("result", result);
+      // console.log("result", result);
       setNewUser({ ...newUser, avatarPicture: result.imageUrl }); // imageURL is how the field is defined in usersController.
     } catch (error) {}
   };
@@ -55,7 +56,7 @@ function SignupView() {
     urlencoded.append("password", newUser.password);
     urlencoded.append("avatarPicture", newUser.avatarPicture);
     var requestOptions = {
-      method: "post",
+      method: "POST",
       body: urlencoded,
     };
     console.log("requestOptions.body", requestOptions.body);
@@ -65,7 +66,7 @@ function SignupView() {
         requestOptions
       );
       const results = await response.json();
-      console.log("results", results);
+      // console.log("results", results);
     } catch (error) {
       console.log("error fetching", error);
     }

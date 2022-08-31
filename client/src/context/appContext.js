@@ -24,7 +24,7 @@ const AppContextProvider = (props) => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log("myItem: ", myItem);
+  // console.log("myItem: ", myItem);
 
   return (
     <AppContext.Provider

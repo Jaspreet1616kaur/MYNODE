@@ -18,17 +18,17 @@ const getAllMuseums = async (req, res) => {
     });
   }
 };
-const uploadUserPicture = async (req, res) => {
-  console.log("req.boy", req.boy);
+const uploadPicture = async (req, res) => {
+  // console.log("req.body", req.body);
 
   try {
-    console.log("req.file :>> ", req.file); //Multer is storing the file in that property(objec) of the request object
+    // console.log("req.file :>> ", req.file); //Multer is storing the file in that property(objec) of the request object
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "MuseumPicture",
     });
     console.log("uploadResult", uploadResult); //this show us the object with all the information about the upload, including the public URL in result.url
     res.status(200).json({
-      message: "Image upload succesfull",
+      message: "Image upload  to cloudinary succesfull",
       imageUrl: uploadResult.url,
     });
   } catch (error) {
@@ -41,7 +41,7 @@ const uploadUserPicture = async (req, res) => {
 // 16. Create museums function
 const newMuseum = async (req, res) => {
   console.log("new museum req");
-  console.log("req.body", req.body);
+  // console.log("req.body>>>>>", req.body);
   try {
     const existingMuseum = await museumsModel.findOne({ name: req.body.name });
     if (existingMuseum) {
@@ -57,8 +57,9 @@ const newMuseum = async (req, res) => {
         // 22. IF we include user Roles, we would have to include it in our newUser object (and Model)
       });
       // 21. I "try" to save my new created user.
-
+      console.log("newMuseum>>>>>", newMuseum);
       try {
+        // console.log("newMuseum>>>>>", newMuseum);
         const savedMuseum = await newMuseum.save();
         res.status(201).json({
           museum: {
@@ -66,6 +67,7 @@ const newMuseum = async (req, res) => {
             name: savedMuseum.name,
             price: savedMuseum.price,
             type: savedMuseum.type,
+            id: savedMuseum._id,
           },
           msg: "museum upload successfully",
         });
@@ -81,5 +83,25 @@ const newMuseum = async (req, res) => {
       .json({ message: "uploading is  not possible", error: error });
   }
 };
+//here i create  user find by id
+const updateMuseum = async (req, res) => {
+  console.log("req.body in Pudate>>>", req.body);
+  const museumId = req.body.id;
+  try {
+    const updatedMuseum = await museumsModel.findByIdAndUpdate(
+      museumId,
+      {
+        type: req.body.type,
+        name: req.body.name,
+        price: req.body.price,
+      },
+      { new: true }
+    );
+    res.status(200).json({ msg: "museum updated", updatedMuseum });
+  } catch (error) {
+    console.log("error updating museum", error);
+    res.status(409).json({ msg: "error updating museum", error: error });
+  }
+};
 
-export { getAllMuseums, uploadUserPicture, newMuseum };
+export { getAllMuseums, uploadPicture, newMuseum, updateMuseum };

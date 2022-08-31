@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import "./MainNavbar.css";
-import { Grid, Link } from "@mui/material";
+import { Link } from "@mui/material";
 
 function MainNavbar() {
   return (
@@ -15,14 +15,14 @@ function MainNavbar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" className="link">
           <Toolbar variant="dense" style={{ width: "100px" }}>
-            <IconButton
+            {/* <IconButton
               edge="start"
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography
               variant="h6"
               color="inherit"
@@ -38,10 +38,10 @@ function MainNavbar() {
             <Link href="profile">
               <Button color="inherit">Profile</Button>
             </Link>
+            ......
             <Link href="postmuseum">
-              <Button color="inherit">Add Museum</Button>
+              <Button color="inherit">NewMuseum</Button>
             </Link>
-            .
           </Toolbar>
         </AppBar>
       </Box>

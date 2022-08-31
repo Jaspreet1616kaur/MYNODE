@@ -16,9 +16,7 @@ function App() {
         <AppContextProvider>
           <Routes>
             <Route path="home" element={<MainItemListView />} />
-
             <Route path="login" element={<Login />} />
-
             <Route path="signup" element={<SignupView />} />
             <Route path="profile" element={<Profile />} />
             <Route path="postmuseum" element={<PostMuseum />} />

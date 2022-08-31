@@ -18,7 +18,7 @@ export const AutenticationContextProvider = (props) => {
 
   useEffect(() => {
     isUserLoggedIn();
-    console.log(user);
+    // console.log(user);
   }, [user]);
 
   const logoutSomething = () => {
