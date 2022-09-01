@@ -117,9 +117,6 @@ function PostMuseum() {
         />
         <input type="file" onChange={attachFileHandler} />
         <button type="submit">Click to submit</button>
-        {/* <form>
-          <button onClick={imageUpload}>Upload Picture</button>
-        </form> */}
 
         {/* NOTE, it would be nice to include the museum city , or city and country */}
 

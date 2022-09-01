@@ -7,11 +7,13 @@ import { AutenticationContextProvider } from "./context/AutenticationContext";
 import { AppContextProvider } from "./context/appContext";
 import Profile from "./views/Profile";
 import PostMuseum from "./views/PostMuseum";
+import Messenger from "./views/Messenger";
 
 function App() {
   return (
     <div className="App">
       <MainNavbar />
+
       <AutenticationContextProvider>
         <AppContextProvider>
           <Routes>
@@ -20,6 +22,7 @@ function App() {
             <Route path="signup" element={<SignupView />} />
             <Route path="profile" element={<Profile />} />
             <Route path="postmuseum" element={<PostMuseum />} />
+            <Route path="messenger" element={<Messenger />} />
           </Routes>
         </AppContextProvider>
       </AutenticationContextProvider>

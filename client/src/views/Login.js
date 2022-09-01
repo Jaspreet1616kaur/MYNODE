@@ -50,7 +50,7 @@ function Login() {
             name="email"
           />
 
-          <label for="psw">
+          <label htmlFor="psw">
             <b>Password</b>
           </label>
           <input

@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 
 function MainItemListCard({ item }) {
   const [updatedMuseumData, setUpdatedMuseumData] = useState(null);
+
   const handleChangeHandler = (e) => {
     setUpdatedMuseumData({
       ...updatedMuseumData,
@@ -55,7 +56,9 @@ function MainItemListCard({ item }) {
       </CardContent>
 
       <form onSubmit={updatedMuseum}>
-        <label htmlFor="updatedMuseum">NewMuseum</label>
+        <label htmlFor="updatedMuseum">
+          <h1>Update Museum</h1>
+        </label>
         <input
           type="text"
           placeholder="name "
