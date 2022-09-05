@@ -3,6 +3,8 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
+import commentsRoute from "./routes/commentsRoute.js";
+
 import usersRoute from "./routes/usersRoute.js";
 import citiesRoute from "./routes/citiesRoute.js";
 import museumsRoute from "./routes/museumsRoute.js";
@@ -47,6 +49,7 @@ const loadRoutes = () => {
   app.use("/api/museums", museumsRoute);
   // here  new route for users and import the usersRoute
   app.use("/api/users", usersRoute);
+  app.use("/api/comments", commentsRoute);
 };
 (async function controller() {
   mongoBConnection();

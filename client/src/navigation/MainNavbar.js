@@ -36,9 +36,6 @@ function MainNavbar() {
             <Link href="postmuseum">
               <Button color="inherit">NewMuseum</Button>
             </Link>
-            <Link href="messenger">
-              <Button color="inherit">Messm</Button>
-            </Link>
           </Toolbar>
         </AppBar>
       </Box>

@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 
 function MainItemListCard({ item }) {
   const [updatedMuseumData, setUpdatedMuseumData] = useState(null);
+  const [updatedComments, setUpdatedComments] = useState(null);
 
   const handleChangeHandler = (e) => {
     setUpdatedMuseumData({
@@ -13,6 +14,12 @@ function MainItemListCard({ item }) {
     });
   };
 
+  const handleUpdateChange = (e) => {
+    setUpdatedComments({
+      ...updatedComments,
+      [e.target.name]: e.target.value,
+    });
+  };
   //NOTE 2nd) Create state variable for the modifed data
   //NOTE 3rd) Create function to SET the modified data state variable
   //NOTE 4th) Create function to : A) append all the modified data to the request, B) do the fetch request to api/museums /updateMuseum
@@ -37,13 +44,42 @@ function MainItemListCard({ item }) {
         requestOptions
       );
       const results = await response.json();
-      // console.log("results", results);
+      console.log("uploading successful", results);
     } catch (error) {
-      console.log("error fetching", error);
+      console.log("museum not  upload succcessfullly", error);
     }
+
+    ///here a create varibalre for comments option
+    const updatedComments = async (e) => {
+      console.log("updatedComments", updatedComments);
+      console.log("item._id", item._id);
+      e.preventDefault();
+      let urlencoded = new URLSearchParams();
+      urlencoded.append("userName", updatedComments.userName);
+      urlencoded.append("id", item._id);
+      urlencoded.append("avatarPicture", updatedComments.avatarPicture);
+      urlencoded.append("commentText", updatedComments.commentText);
+
+      var requestOptions = {
+        method: "POST",
+        body: urlencoded,
+      };
+      console.log("requestOptions.body", requestOptions.body);
+      try {
+        const response = await fetch(
+          "http://localhost:5001/api/comments",
+          requestOptions
+        );
+        const results = await response.json();
+        // console.log("results", results);
+      } catch (error) {
+        console.log("error fetching", error);
+      }
+    };
   };
 
   // console.log("item: ", item);
+  console.log("updatedComments: ", updatedComments);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
@@ -52,6 +88,23 @@ function MainItemListCard({ item }) {
           {item.avatarPicture && <img src={item.avatarPicture} height={200} />}
           {item && <p>{item.type}</p>}
           {item && <p>{item.price}</p>}
+          <form onSubmit={updatedComments}>
+            <label htmlFor="updatedComments">
+              <p>updatedComments</p>
+            </label>
+            <input
+              type="text"
+              placeholder="commentsText "
+              value={
+                updatedComments?.commentsText
+                  ? updatedComments.commentsText
+                  : ""
+              }
+              onChange={handleUpdateChange}
+              name="commentsText"
+            />
+            <button type="updatedComments">Click to submit</button>
+          </form>
         </Typography>
       </CardContent>
 
