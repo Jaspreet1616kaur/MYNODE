@@ -1,44 +1,17 @@
-import React, { useState } from "react";
-import { getToken } from "../utils/getToken";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../context/appContext";
 
 function Profile() {
-  const [userProfile, setUserProfile] = useState(null);
-  const [error, setError] = useState(null);
-  const getProfile = async () => {
-    const token = getToken();
-    if (token) {
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${token}`);
+  const { getProfile, userProfile } = useContext(AppContext);
 
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-      };
-      try {
-        const response = await fetch(
-          "http://localhost:5001/api/users/profile",
-          requestOptions
-        );
-        const result = await response.json();
-        setUserProfile({
-          email: result.email,
-          userName: result.userName,
-          avatarPicture: result.avatarPicture,
-        });
-      } catch (error) {
-        console.log("error getting profile", error);
-        setError("you need login first");
-      }
-    }
-  };
   return (
     <>
       <h2>User Profile</h2>
       <button onClick={getProfile}>getProfile</button>
       {userProfile && (
         <div>
-          <h1>{userProfile.userName}</h1>
-          <h1>{userProfile.email}</h1>
+          <h1>UserName::{userProfile.userName}</h1>
+          <h1>UserEmail::{userProfile.email}</h1>
           <img src={userProfile.avatarPicture} alt="" width={100} />
         </div>
       )}

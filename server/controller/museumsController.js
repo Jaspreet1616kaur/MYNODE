@@ -86,10 +86,10 @@ const newMuseum = async (req, res) => {
 //here i create  user find by id
 const updateMuseum = async (req, res) => {
   console.log("req.body in update>>>", req.body);
-  const museumId = req.body.id;
+  const Id = req.body.id;
   try {
     const updatedMuseum = await museumsModel.findByIdAndUpdate(
-      museumId,
+      Id,
       {
         type: req.body.type,
         name: req.body.name,

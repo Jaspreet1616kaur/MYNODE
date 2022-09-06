@@ -1,16 +1,32 @@
-import { React, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
+import { getToken } from "../utils/getToken";
+import { AppContext } from "../context/appContext";
 
 function MainItemListCard({ item }) {
+  const { getProfile, userProfile } = useContext(AppContext);
+
   const [updatedMuseumData, setUpdatedMuseumData] = useState(null);
-  const [updatedComments, setUpdatedComments] = useState();
+  const [updatedComments, setUpdatedComments] = useState({});
   const [showUpdateForm, setShowUpdateForm] = useState(true);
-
+  const token = getToken();
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   console.log("showUpdateForm: ", showUpdateForm);
+  const museumId = item.id;
 
+  const getComments = async () => {
+    const response = fetch(
+      `http://localhost:5001/api/comments/getSpecificComments/${museumId}`
+    );
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
   const handleUpdateMuseumClick = () => {
     setShowUpdateForm((prev) => !prev);
   };
@@ -35,6 +51,7 @@ function MainItemListCard({ item }) {
   const updatedMuseum = async (e) => {
     console.log("updatedMuseumData", updatedMuseumData);
     console.log("item._id", item._id);
+
     e.preventDefault();
     let urlencoded = new URLSearchParams();
     urlencoded.append("type", updatedMuseumData.type);
@@ -57,56 +74,68 @@ function MainItemListCard({ item }) {
     } catch (error) {
       console.log("museum not  upload succcessfullly", error);
     }
-
-    ///here a create varibalre for comments option
-    const updatedComments = async (e) => {
-      console.log("updatedComments", updatedComments);
-      console.log("item._id", item._id);
-      e.preventDefault();
-      let urlencoded = new URLSearchParams();
-      urlencoded.append("userName", updatedComments.userName);
-      urlencoded.append("id", item._id);
-      urlencoded.append("avatarPicture", updatedComments.avatarPicture);
-      urlencoded.append("commentText", updatedComments.commentText);
-
-      var requestOptions = {
-        method: "POST",
-        body: urlencoded,
-      };
-      console.log("requestOptions.body", requestOptions.body);
-      try {
-        const response = await fetch(
-          "http://localhost:5001/api/comments",
-          requestOptions
-        );
-        const results = await response.json();
-        // console.log("results", results);
-      } catch (error) {
-        console.log("error fetching", error);
-      }
-    };
   };
+  // /here a create varibalre for comments option
+  const postComment = async (e) => {
+    e.preventDefault();
+    console.log("updatedComments", updatedComments);
+    console.log("item._id", item._id);
+    // let urlencoded = new URLSearchParams();
+    // urlencoded.append("userName", updatedComments.userName);
+    // urlencoded.append("id", item._id);
+    // urlencoded.append("avatarPicture", updatedComments.avatarPicture);
+    // urlencoded.append("commentText", updatedComments.commentText);
+    // urlencoded.append("museumid", updatedComments.museumId);
+    var requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        commentText: updatedComments.commentsText,
+        userName: updatedComments.userName,
+        avatarPicture: updatedComments.avatarPicture,
+        museumId: museumId,
+      }),
+    };
 
-  // console.log("item: ", item);
-  console.log("updatedComments: ", updatedComments);
+    try {
+      const response = await fetch(
+        "http://localhost:5001/api/comments",
+        requestOptions
+      );
+      const results = await response.json();
+      console.log("results", results);
+    } catch (error) {
+      console.log("error fetching", error);
+    }
+  };
+  console.log("item: ", item);
+  console.log("updatedComments: ", updatedComments.commentsText);
+  console.log("userProfile: ", userProfile);
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
-        <form onChange={updatedComments}>
-          <label htmlFor="updatedComments">
-            <p>updatedComments</p>
-          </label>
-          <input
-            type="text"
-            placeholder="commentsText "
-            value={
-              updatedComments?.commentsText ? updatedComments.commentsText : ""
-            }
-            onChange={handleUpdateComments}
-            name="commentsText"
-          />
-          <button type="updatedComments"> submit</button>
-        </form>
+        <label htmlFor="updatedComments">
+          <p>updatedComments</p>
+        </label>
+        <input
+          type="text"
+          placeholder="commentsText "
+          value={
+            updatedComments?.commentsText ? updatedComments.commentsText : ""
+          }
+          onChange={handleUpdateComments}
+          name="commentsText"
+        />
+
+        <button type="button" onClick={postComment}>
+          {" "}
+          submit
+        </button>
+
         <Typography gutterBottom variant="h5" component="div">
           {item.name}
           {item.avatarPicture && <img src={item.avatarPicture} height={200} />}
