@@ -2,10 +2,18 @@ import { React, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
 
 function MainItemListCard({ item }) {
   const [updatedMuseumData, setUpdatedMuseumData] = useState(null);
-  const [updatedComments, setUpdatedComments] = useState(null);
+  const [updatedComments, setUpdatedComments] = useState();
+  const [showUpdateForm, setShowUpdateForm] = useState(true);
+
+  console.log("showUpdateForm: ", showUpdateForm);
+
+  const handleUpdateMuseumClick = () => {
+    setShowUpdateForm((prev) => !prev);
+  };
 
   const handleChangeHandler = (e) => {
     setUpdatedMuseumData({
@@ -14,12 +22,13 @@ function MainItemListCard({ item }) {
     });
   };
 
-  const handleUpdateChange = (e) => {
+  const handleUpdateComments = (e) => {
     setUpdatedComments({
       ...updatedComments,
       [e.target.name]: e.target.value,
     });
   };
+
   //NOTE 2nd) Create state variable for the modifed data
   //NOTE 3rd) Create function to SET the modified data state variable
   //NOTE 4th) Create function to : A) append all the modified data to the request, B) do the fetch request to api/museums /updateMuseum
@@ -83,62 +92,62 @@ function MainItemListCard({ item }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
+        <form onChange={updatedComments}>
+          <label htmlFor="updatedComments">
+            <p>updatedComments</p>
+          </label>
+          <input
+            type="text"
+            placeholder="commentsText "
+            value={
+              updatedComments?.commentsText ? updatedComments.commentsText : ""
+            }
+            onChange={handleUpdateComments}
+            name="commentsText"
+          />
+          <button type="updatedComments"> submit</button>
+        </form>
         <Typography gutterBottom variant="h5" component="div">
           {item.name}
           {item.avatarPicture && <img src={item.avatarPicture} height={200} />}
           {item && <p>{item.type}</p>}
           {item && <p>{item.price}</p>}
-          <form onSubmit={updatedComments}>
-            <label htmlFor="updatedComments">
-              <p>updatedComments</p>
-            </label>
-            <input
-              type="text"
-              placeholder="commentsText "
-              value={
-                updatedComments?.commentsText
-                  ? updatedComments.commentsText
-                  : ""
-              }
-              onChange={handleUpdateChange}
-              name="commentsText"
-            />
-            <button type="updatedComments">Click to submit</button>
-          </form>
         </Typography>
       </CardContent>
+      <Button onClick={handleUpdateMuseumClick}>Show More</Button>
 
-      <form onSubmit={updatedMuseum}>
-        <label htmlFor="updatedMuseum">
-          <h1>Update Museum</h1>
-        </label>
-        <input
-          type="text"
-          placeholder="name "
-          value={updatedMuseumData?.name ? updatedMuseumData.name : ""}
-          onChange={handleChangeHandler}
-          name="name"
-        />
+      {!showUpdateForm && (
+        <form onSubmit={updatedMuseum}>
+          <label htmlFor="updatedMuseum">
+            <h1>Update Museum</h1>
+          </label>
+          <input
+            type="text"
+            placeholder="name "
+            value={updatedMuseumData?.name ? updatedMuseumData.name : ""}
+            onChange={handleChangeHandler}
+            name="name"
+          />
 
-        <input
-          type="text"
-          placeholder="price"
-          value={updatedMuseumData?.price ? updatedMuseumData.price : ""}
-          onChange={handleChangeHandler}
-          name="price"
-        />
+          <input
+            type="text"
+            placeholder="price"
+            value={updatedMuseumData?.price ? updatedMuseumData.price : ""}
+            onChange={handleChangeHandler}
+            name="price"
+          />
 
-        <input
-          type="text"
-          placeholder="type"
-          value={updatedMuseumData?.type ? updatedMuseumData.type : ""}
-          onChange={handleChangeHandler}
-          name="type"
-        />
+          <input
+            type="text"
+            placeholder="type"
+            value={updatedMuseumData?.type ? updatedMuseumData.type : ""}
+            onChange={handleChangeHandler}
+            name="type"
+          />
 
-        <button type="updatedMuseum">Click to submit</button>
-      </form>
-
+          <button type="updatedMuseum">Click to submit</button>
+        </form>
+      )}
       {/* NOTE 1st) create input fields, to modify data (input field for Name, for price, for type). Create button to call the funtion to modify */}
     </Card>
   );
