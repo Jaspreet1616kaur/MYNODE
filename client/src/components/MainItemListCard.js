@@ -12,18 +12,16 @@ function MainItemListCard({ item }) {
   const [updatedMuseumData, setUpdatedMuseumData] = useState(null);
   const [updatedComments, setUpdatedComments] = useState({});
   const [showUpdateForm, setShowUpdateForm] = useState(true);
+  const [commentsData, setCommentsData] = useState(null);
+  const [allComments, setAllComments] = useState(null);
+
   const token = getToken();
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  console.log("showUpdateForm: ", showUpdateForm);
-  const museumId = item.id;
 
-  const getComments = async () => {
-    const response = fetch(
-      `http://localhost:5001/api/comments/getSpecificComments/${museumId}`
-    );
-  };
+  const museumId = item._id;
+
   useEffect(() => {
     getProfile();
   }, []);
@@ -45,12 +43,63 @@ function MainItemListCard({ item }) {
     });
   };
 
+  const getComments = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:5001/api/comments/getSpecificComments/${museumId}`,
+        requestOptions
+      );
+      console.log("response", response);
+      const result = await response.json();
+      console.log("result: ", result);
+      setCommentsData(result.singleComments);
+      console.log("result: ", result.singleComments);
+    } catch (error) {
+      console.log("error getting  comments: ", error);
+    }
+  };
+  useEffect(() => {
+    getComments();
+  }, []);
+
+  const getAllComments = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        ` http://localhost:5001/api/comments/allComments`,
+        requestOptions
+      );
+
+      const result = await response.json();
+      setAllComments(result.allComments);
+      console.log("result.allComments: ", result);
+    } catch (error) {
+      console.log("error getting  comments: ", error);
+    }
+  };
+  useEffect(() => {
+    getAllComments();
+  }, []);
+
   //NOTE 2nd) Create state variable for the modifed data
   //NOTE 3rd) Create function to SET the modified data state variable
   //NOTE 4th) Create function to : A) append all the modified data to the request, B) do the fetch request to api/museums /updateMuseum
   const updatedMuseum = async (e) => {
     console.log("updatedMuseumData", updatedMuseumData);
-    console.log("item._id", item._id);
+    console.log("item.id", item.id);
 
     e.preventDefault();
     let urlencoded = new URLSearchParams();
@@ -80,12 +129,7 @@ function MainItemListCard({ item }) {
     e.preventDefault();
     console.log("updatedComments", updatedComments);
     console.log("item._id", item._id);
-    // let urlencoded = new URLSearchParams();
-    // urlencoded.append("userName", updatedComments.userName);
-    // urlencoded.append("id", item._id);
-    // urlencoded.append("avatarPicture", updatedComments.avatarPicture);
-    // urlencoded.append("commentText", updatedComments.commentText);
-    // urlencoded.append("museumid", updatedComments.museumId);
+
     var requestOptions = {
       method: "POST",
       headers: {
@@ -107,41 +151,32 @@ function MainItemListCard({ item }) {
       );
       const results = await response.json();
       console.log("results", results);
+      setUpdatedComments(results.savedComment);
     } catch (error) {
       console.log("error fetching", error);
     }
   };
-  console.log("item: ", item);
-  console.log("updatedComments: ", updatedComments.commentsText);
-  console.log("userProfile: ", userProfile);
 
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
-        <label htmlFor="updatedComments">
-          <p>updatedComments</p>
-        </label>
-        <input
-          type="text"
-          placeholder="commentsText "
-          value={
-            updatedComments?.commentsText ? updatedComments.commentsText : ""
-          }
-          onChange={handleUpdateComments}
-          name="commentsText"
-        />
-
-        <button type="button" onClick={postComment}>
-          {" "}
-          submit
-        </button>
-
         <Typography gutterBottom variant="h5" component="div">
           {item.name}
           {item.avatarPicture && <img src={item.avatarPicture} height={200} />}
           {item && <p>{item.type}</p>}
           {item && <p>{item.price}</p>}
+          {item && <p>{item.name}</p>}
         </Typography>
+        <div>
+          {allComments &&
+            allComments.map((comment, i) => {
+              return (
+                <li>
+                  {comment.commentText} key{i}
+                </li>
+              );
+            })}
+        </div>
       </CardContent>
       <Button onClick={handleUpdateMuseumClick}>Show More</Button>
 
@@ -175,10 +210,33 @@ function MainItemListCard({ item }) {
           />
 
           <button type="updatedMuseum">Click to submit</button>
+          <label htmlFor="updatedComments">
+            <h1>Comments</h1>
+          </label>
+          <input
+            type="text"
+            placeholder="commentsText "
+            value={
+              updatedComments?.commentsText ? updatedComments.commentsText : ""
+            }
+            onChange={handleUpdateComments}
+            name="commentsText"
+          />
+
+          <input
+            type="text"
+            placeholder="userName "
+            value={updatedComments?.userName ? updatedComments.userName : ""}
+            onChange={handleUpdateComments}
+            name="userName"
+          />
+          <button type="button" onClick={postComment}>
+            submit
+          </button>
         </form>
       )}
-      {/* NOTE 1st) create input fields, to modify data (input field for Name, for price, for type). Create button to call the funtion to modify */}
     </Card>
   );
 }
+
 export default MainItemListCard;

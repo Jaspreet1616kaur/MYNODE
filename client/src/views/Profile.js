@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+
 import { AppContext } from "../context/appContext";
 
 function Profile() {
