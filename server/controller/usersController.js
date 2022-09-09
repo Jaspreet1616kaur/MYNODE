@@ -90,7 +90,7 @@ const signUp = async (req, res) => {
 const login = async (req, res) => {
   const existingUser = await userModel.findOne({ email: req.body.email });
   if (!existingUser) {
-    res.status(401).json({ msg: "user not found" });
+    res.status(401).json({ msg: "Neend to registration" });
   } else {
     const verified = await verifyPassword(
       req.body.password,

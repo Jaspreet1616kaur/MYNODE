@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 function MainItemListCard({ item }) {
-  const { getProfile, userProfile } = useContext(AppContext);
+  const { getProfile } = useContext(AppContext);
 
   const [updatedMuseumData, setUpdatedMuseumData] = useState(null);
   const [updatedComments, setUpdatedComments] = useState({});
@@ -202,21 +202,17 @@ function MainItemListCard({ item }) {
                   <div key={i}>
                     <h3> {comments.userName} </h3>
                     <li> {comments.commentText}</li>
-                    <button onClick={handleDeleteOneComment} id={comments._id}>
+                    {/* <button onClick={handleDeleteOneComment} id={comments._id}>
                       Delete
-                    </button>
-                    {/* <IconButton
-                      aria-label={handleDeleteOneComment}
-                      id={comments._id}
-                    >
-                      <DeleteIcon />
-                    </IconButton> */}
-                    {/* <div
-                      key={i}
-                      comments={museumId}
-                      handleDeleteOneComment={handleDeleteOneComment}
-                      commentsData={commentsData}
-                    /> */}
+                    </button> */}
+                    <div className="comments-card-texts-con">
+                      <IconButton
+                        onClick={handleDeleteOneComment}
+                        id={comments._id}
+                      >
+                        <DeleteIcon size="small" className="deleteIcon" />
+                      </IconButton>
+                    </div>
                   </div>
                 )
               );

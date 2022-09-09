@@ -19,9 +19,12 @@ function MainNavbar() {
               color="inherit"
               component="div"
             ></Typography>
-            <Link href="home">
+            <Link href="/">
               <Button color="inherit">Home </Button>
             </Link>
+            {/* <Link href="home">
+              <Button color="inherit">Home </Button>
+            </Link> */}
             <Link href="profile">
               <Button color="inherit">Profile</Button>
             </Link>

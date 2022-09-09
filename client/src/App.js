@@ -7,6 +7,7 @@ import { AutenticationContextProvider } from "./context/AutenticationContext";
 import { AppContextProvider } from "./context/appContext";
 import Profile from "./views/Profile";
 import PostMuseum from "./views/PostMuseum";
+import MainWelcomeView from "./views/MainWelcomeView";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <AppContextProvider>
           <Routes>
             <Route path="home" element={<MainItemListView />} />
+            <Route path="/" element={<MainWelcomeView />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignupView />} />
             <Route path="profile" element={<Profile />} />
