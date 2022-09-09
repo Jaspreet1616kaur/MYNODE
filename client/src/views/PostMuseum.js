@@ -5,28 +5,21 @@ function PostMuseum() {
   const [uploadPicture, setUploadPicture] = useState({});
 
   const handleChangeHandler = (e) => {
-    // console.log("e.target.name", e.target.name);
-    // console.log("e.target.name", e.target.value);
-
     setNewMuseum({ ...newMuseum, [e.target.name]: e.target.value });
   };
   const attachFileHandler = (e) => {
     setUploadPicture(e.target.files[0]);
   };
-  // console.log("NewMuseum", newMuseum);
 
   const addMuseum = async (e) => {
     e.preventDefault();
     const uploadPicture = await imageUpload();
-    // console.log("uploadPicture", uploadPicture);
-    const urlencoded = new URLSearchParams();
-    // console.log("newMuseum.name", newMuseum.name);
-    // console.log("newMuseum.avatarPicture", newMuseum.avatarPicture);
 
+    const urlencoded = new URLSearchParams();
     urlencoded.append("name", newMuseum.name);
     urlencoded.append("price", newMuseum.price);
     urlencoded.append("type", newMuseum.type);
-    urlencoded.append("avatarPicture", newMuseum.avatarPicture);
+    urlencoded.append("avatarPicture", uploadPicture);
 
     const requestOptions = {
       method: "POST",
@@ -52,14 +45,8 @@ function PostMuseum() {
 
   //finally create the upload funcion : a fetch function to the endpoint we are using in Postman
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Hello  i am running");
-  // };
-
   //NOTE Create a function to upload Image , "imageUpload" : for image upload
   const imageUpload = async (e) => {
-    // e.preventDefault();
     const formData = new FormData();
     console.log("uploadPicture", uploadPicture);
     formData.append("image", uploadPicture);
@@ -76,8 +63,8 @@ function PostMuseum() {
       );
       const result = await response.json();
       console.log("result", result);
-
-      setNewMuseum({ ...newMuseum, avatarPicture: result.imageUrl });
+      return result.imageUrl;
+      // setNewMuseum({ ...newMuseum, avatarPicture: result.imageUrl });
     } catch (error) {
       console.log("error uploading picture", error);
     }

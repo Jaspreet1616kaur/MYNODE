@@ -122,4 +122,5 @@ const getProfile = (req, res) => {
     avatarPicture: req.user.avatarPicture,
   });
 };
+
 export { uploadUserPicture, signUp, login, getProfile };

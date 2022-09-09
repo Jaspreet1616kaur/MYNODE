@@ -22,17 +22,16 @@ function MainNavbar() {
             <Link href="home">
               <Button color="inherit">Home </Button>
             </Link>
+            <Link href="profile">
+              <Button color="inherit">Profile</Button>
+            </Link>
             <Link href="signup">
-              {" "}
               <Button color="inherit">Signup</Button>
             </Link>
             <Link href="login">
               <Button color="inherit">Login</Button>
             </Link>
-            <Link href="profile">
-              <Button color="inherit">Profile</Button>
-            </Link>
-            ..
+            ::
             <Link href="postmuseum">
               <Button color="inherit">NewMuseum</Button>
             </Link>

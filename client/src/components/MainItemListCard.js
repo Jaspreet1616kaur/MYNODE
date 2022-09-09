@@ -5,7 +5,9 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { getToken } from "../utils/getToken";
 import { AppContext } from "../context/appContext";
+import IconButton from "@mui/material/IconButton";
 
+import DeleteIcon from "@mui/icons-material/Delete";
 function MainItemListCard({ item }) {
   const { getProfile, userProfile } = useContext(AppContext);
 
@@ -156,29 +158,99 @@ function MainItemListCard({ item }) {
       console.log("error fetching", error);
     }
   };
+  //for delete comments
+  const handleDeleteOneComment = async (e) => {
+    console.log("e.target.id", e.currentTarget.id);
+    const commentsId = e.currentTarget.id;
+    const deleteOptions = {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ commentsId: commentsId }),
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5001/api/comments/delete-one-comment",
+        deleteOptions
+      );
+      console.log("response-deleteOneComment: ", response);
+      getAllComments();
+    } catch (error) {
+      console.log("error deleting comment: ", error);
+    }
+  };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {item.name}
           {item.avatarPicture && <img src={item.avatarPicture} height={200} />}
-          {item && <p>{item.type}</p>}
-          {item && <p>{item.price}</p>}
-          {item && <p>{item.name}</p>}
+
+          {item && <p>Name: {item.name}</p>}
+          {item && <p>Type: {item.type}</p>}
+          {item && <p>Ticket : {item.price} $</p>}
         </Typography>
+        <hr></hr>
         <div>
+          <h2>Comments :</h2>
           {allComments &&
-            allComments.map((comment, i) => {
+            allComments.map((comments, i) => {
               return (
-                <li>
-                  {comment.commentText} key{i}
-                </li>
+                museumId === comments.museumId && (
+                  <div key={i}>
+                    <h3> {comments.userName} </h3>
+                    <li> {comments.commentText}</li>
+                    <button onClick={handleDeleteOneComment} id={comments._id}>
+                      Delete
+                    </button>
+                    {/* <IconButton
+                      aria-label={handleDeleteOneComment}
+                      id={comments._id}
+                    >
+                      <DeleteIcon />
+                    </IconButton> */}
+                    {/* <div
+                      key={i}
+                      comments={museumId}
+                      handleDeleteOneComment={handleDeleteOneComment}
+                      commentsData={commentsData}
+                    /> */}
+                  </div>
+                )
               );
             })}
+
+          <label htmlFor="updatedComments">
+            <h1>write here for comments</h1>
+          </label>
+          <input
+            type="text"
+            placeholder="commentsText "
+            value={
+              updatedComments?.commentsText ? updatedComments.commentsText : ""
+            }
+            onChange={handleUpdateComments}
+            name="commentsText"
+          />
+
+          <input
+            type="text"
+            placeholder="userName "
+            value={updatedComments?.userName ? updatedComments.userName : ""}
+            onChange={handleUpdateComments}
+            name="userName"
+          />
+
+          <button type="button" onClick={postComment}>
+            submit
+          </button>
         </div>
+        <hr></hr>
       </CardContent>
-      <Button onClick={handleUpdateMuseumClick}>Show More</Button>
+
+      <Button onClick={handleUpdateMuseumClick}>show more</Button>
 
       {!showUpdateForm && (
         <form onSubmit={updatedMuseum}>
@@ -210,29 +282,6 @@ function MainItemListCard({ item }) {
           />
 
           <button type="updatedMuseum">Click to submit</button>
-          <label htmlFor="updatedComments">
-            <h1>Comments</h1>
-          </label>
-          <input
-            type="text"
-            placeholder="commentsText "
-            value={
-              updatedComments?.commentsText ? updatedComments.commentsText : ""
-            }
-            onChange={handleUpdateComments}
-            name="commentsText"
-          />
-
-          <input
-            type="text"
-            placeholder="userName "
-            value={updatedComments?.userName ? updatedComments.userName : ""}
-            onChange={handleUpdateComments}
-            name="userName"
-          />
-          <button type="button" onClick={postComment}>
-            submit
-          </button>
         </form>
       )}
     </Card>

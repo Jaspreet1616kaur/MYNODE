@@ -38,8 +38,8 @@ function Login() {
   return (
     <div>
       <form>
-        <div class="container">
-          <label for="email">
+        <div className="container">
+          <label htmlFor="email">
             <b>E mail</b>
           </label>
           <input

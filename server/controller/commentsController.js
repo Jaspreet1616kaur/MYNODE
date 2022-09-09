@@ -56,7 +56,25 @@ const getAllComments = async (req, res) => {
       allComments,
     });
   } catch (error) {
-    console.log("error geting  all comments: ", error);
+    console.log("error geting all comments: ", error);
   }
 };
-export { postComments, getSpecificComments, getAllComments };
+
+const deleteOneComment = async (req, res) => {
+  console.log("req.body- deleteOneComment: ", req.body);
+  try {
+    const comment = await commentsModel.findByIdAndDelete(req.body.commentsId);
+    console.log("Comment deleted successfully.");
+    res.status(200).json({
+      msg: "Comment deleted successfully.",
+    });
+  } catch (error) {
+    console.log("error deleting comment: ", error);
+    res.status(400).json({
+      msg: "error deleting comment: ",
+      error,
+    });
+  }
+};
+
+export { postComments, getSpecificComments, getAllComments, deleteOneComment };
